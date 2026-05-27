@@ -1,21 +1,14 @@
+import { MongoClient } from 'mongodb';
 
-// // require('dotenv').config();
-// const { MongoClient } = require('mongodb');
+const client = new MongoClient('mongodb://localhost:27017');
+let db;
 
-// MongoClient.connect('mongodb+srv://carlosraf_db_user:nVn6imqwbTRcQ3J5@cluster0.2pdgtpm.mongodb.net/?appName=Cluster0')
+export async function connectDB() {
+  await client.connect();
+  db = client.db('red-social');
+  console.log('MongoDB local conectado');
+}
 
-// // const MONGODB_URI='mongodb+srv://carlosraf_db_user:nVn6imqwbTRcQ3J5@cluster0.2pdgtpm.mongodb.net/?appName=Cluster0';
-
-// // const connectDB = async () => {
-// //   try {
-// //     await mongodb.connect(MONGODB_URI);
-// //     console.log('MongoDB conectado');
-// //   } catch (error) {
-// //     console.error('Error al conectar MongoDB:', error);
-// //     process.exit(1);
-// //   }
-// // };
-
-
-
-// // module.exports = connectDB;
+export function getDB() {
+  return db;
+}
