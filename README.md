@@ -1,11 +1,17 @@
 ﻿# BACK-END_Proyecto_RedSocialM2_LCSC
- Por el momento .env y bs NO funciona
 
- Rutas funcionales (con local)
- - http://localhost:3000/usuarios/register (Ya tiene contenido)
- - http://localhost:3000/usuarios/login (Ya tiene contenido)
- - http://localhost:3000/posts
- - http://localhost:3000/seguidores/seguir
- - http://localhost:3000/seguidores/dejar
- - http://localhost:3000/mensajes
- - http://localhost:3000/mensajes/ID_USUARIO
+Rutas funcionales
+
+Usuarios
+POST http://localhost:3000/usuarios/register
+POST http://localhost:3000/usuarios/login
+PUT http://localhost:3000/usuarios/edituser/:userid
+DELETE http://localhost:3000/usuarios/deleteuser/:userid
+
+Posts
+POST http://localhost:3000/posts/addpost
+GET http://localhost:3000/posts
+GET http://localhost:3000/posts/user/:userId
+POST http://localhost:3000/posts/feed
+PUT http://localhost:3000/posts/editpost/:postId
+DELETE http://localhost:3000/posts/deletepost/:postId
