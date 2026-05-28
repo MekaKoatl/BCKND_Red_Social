@@ -5,13 +5,18 @@ import { getDB } from "../index.js";
 const api = express.Router();
 
 // POST /usuarios/registro
-api.post("/registro", async (req, res) => {
+api.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
     const db = getDB();
 
-    const existe = await req.app.locals.db.collection("usuarios").findOne({ email });
-    if (existe)
+    if (!username || !email || !password)
+      return res.status(400).send({ message: "Faltan datos obligatorios" });
+
+    const existemail = await req.app.locals.db
+      .collection("usuarios")
+      .findOne({ email });
+    if (existemail)
       return res.status(400).json({ message: "El correo ya está registrado" });
 
     const hash = await bcrypt.hash(password, 10);
@@ -31,7 +36,9 @@ api.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const db = getDB();
 
-    const usuario = await  req.app.locals.db.collection("usuarios").findOne({ email });
+    const usuario = await req.app.locals.db
+      .collection("usuarios")
+      .findOne({ email });
     if (!usuario)
       return res.status(404).json({ message: "Usuario no encontrado" });
 
@@ -47,5 +54,29 @@ api.post("/login", async (req, res) => {
     res.status(500).json({ message: "Error en el servidor", error });
   }
 });
+
+// POST /usuarios/editar
+api.post("/edituser/:userid", async (req, res) => {
+  try {
+    const userid = req.params._id;
+    const { username, email, password } = req.body;
+    const db = req.app.locals.db;
+
+    const campos = {};
+    if (username) campos.username = username;
+    if (email) campos.email = email;
+    if (password) campos.password = password;
+
+    await db.collection("usuarios").updateOne({ userid }, { $set: campos });
+    res.send({
+      message: `${username}, tus datos se han actualizado correctamente`,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error en el servidor", error });
+  }
+});
+
+// DELETE /usuarios/eliminar
+api.delete()
 
 export default api;

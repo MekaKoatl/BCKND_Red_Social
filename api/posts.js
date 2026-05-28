@@ -5,9 +5,11 @@ import { ObjectId } from "mongodb";
 const api = express.Router();
 
 // POST /posts - crear post
-api.post("/", async (req, res) => {
-  console.log("Funciona");
-  res.json({ message: "Funciona" });
+api.post("/addpost", async (req, res) => {
+  const db = getDB();
+
+  const { username, email, password } = req.body;
+  
 });
 /////////////////////////////////////////////
 
@@ -16,5 +18,16 @@ api.get("/", async (req, res) => {
   console.log("Funciona");
   res.json({ message: "Funciona" });
 });
+
+
+//////////////////////
+// POST /posts - editar post
+api.post("/addpost", async (req, res) => {
+  const db = getDB();
+  
+  const { username, email, password } = req.body;
+  
+});
+
 
 export default api;
