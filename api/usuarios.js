@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcryptjs";
-import { getDB } from "../db.js";
+import { getDB } from "../index.js";
 
 const api = express.Router();
 
@@ -8,6 +8,7 @@ const api = express.Router();
 api.post("/registro", async (req, res) => {
   try {
     const { username, email, password } = req.body;
+    const db = getDB();
 
     const existe = await req.app.locals.db.collection("usuarios").findOne({ email });
     if (existe)
