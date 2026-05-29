@@ -10,10 +10,12 @@ api.post("/registro", async (req, res) => {
     const { username, email, password } = req.body;
     const db = getDB();
 
-    const existe = await req.app.locals.db.collection("usuarios").findOne({ email });
+     const existe = await req.app.locals.db.collection("usuarios").findOne({ user: existe });
     if (existe)
-      return res.status(400).json({ message: "El correo ya está registrado" });
-
+      return res.status(400).json({ message: "El usuario ya está registrado" });
+    if(password.length < 6){
+      return res.redirect("la contraseña es demasiado corta")
+    }
     const hash = await bcrypt.hash(password, 10);
     const result = await req.app.locals.db
       .collection("usuarios")
