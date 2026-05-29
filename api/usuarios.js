@@ -10,12 +10,25 @@ api.post("/register", async (req, res) => {
     const { username, email, password } = req.body;
     const db = req.app.locals.db;
 
+    ////////Check de datos
     if (!username || !email || !password)
       return res.status(400).send({ message: "Faltan datos obligatorios" });
 
     const existemail = await db.collection("usuarios").findOne({ email });
     if (existemail)
       return res.status(400).json({ message: "El correo ya está registrado" });
+
+    const existeuser = await db.collection("usuarios").findOne({ username });
+    if (existeuser)
+      return res
+        .status(400)
+        .json({ message: "El nombre de usuario ya está registrado" });
+
+    if (password.length < 10) {
+      return res.redirect("la contraseña es demasiado corta");
+    }
+
+    /////////////////////////////////////////////
 
     const hash = await bcrypt.hash(password, 10);
     const result = await db
