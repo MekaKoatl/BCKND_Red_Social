@@ -1,5 +1,4 @@
 ﻿# BACK-END_Proyecto_RedSocialM2_LCSC
-<<<<<<< HEAD
 
 Rutas funcionales
 
@@ -16,4 +15,4 @@ Posts
 - POST http://localhost:3000/posts/feed
 - PUT http://localhost:3000/posts/editpost/:postId
 - DELETE http://localhost:3000/posts/deletepost/:postId
-=======
+
