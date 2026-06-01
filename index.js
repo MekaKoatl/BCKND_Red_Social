@@ -6,6 +6,10 @@ import { MongoClient } from "mongodb";
 import postsApi from "./api/posts.js";
 import seguidoresApi from "./api/seguidores.js";
 import mensajesApi from "./api/mensajes.js";
+import dns from "dns";
+
+// DNS de Google
+dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 dotenv.config();
 
@@ -14,6 +18,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+// en mongo atlas -> configurar "network access" -> ip access list -> 0.0.0.0/0
+// comprobar variable de entorno MONGODB_URI en local y en vercel
 async function connectDB() {
   const uri = process.env.MONGODB_URI;
   const client = await MongoClient.connect(uri);
@@ -22,23 +29,24 @@ async function connectDB() {
 }
 
 await connectDB();
-// get("/", async (req, res) => {
-//   res.send({ message: "API Conectada" });
-// });
 
-// Rutas // apis
 app.use("/usuarios", usuariosApi);
 app.use("/posts", postsApi);
 app.use("/seguidores", seguidoresApi);
 app.use("/mensajes", mensajesApi);
 
 app.get("/", (req, res) => {
-  res.json({ message: "Servidor funcionando" });
-});
+  res.send("welcome to my api")
+})
+
+
 
 app.listen(process.env.PORT || 3000);
 
 export default app;
 
 
-///MONGODB_URI = mongodb+srv://carlosraf_db_user:Carlos2026@cluster0.2pdgtpm.mongodb.net/?appName=Cluster0
+
+
+//MONGODB_URI = mongodb+srv://carlosraf_db_user:Carlos2026@cluster0.2pdgtpm.mongodb.net/?appName=Cluster0
+//MONGODB_URI = mongodb://admin:admin123@127.0.0.1:27017
