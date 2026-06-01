@@ -25,7 +25,9 @@ async function connectDB() {
   console.log("MongoDB Atlas conectado");
 }
 
-
+get("/", async (req, res) => {
+  res.send({ message: "API Conectada" });
+});
 
 app.use(cors());
 app.use(express.json());
