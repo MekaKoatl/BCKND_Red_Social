@@ -19,11 +19,13 @@ await connectDB();
 
 async function connectDB() {
   console.log(process.env.db);
-  const uri = process.env.db;
+  const uri = process.env.MONGODB_URI;
   const client = await MongoClient.connect(uri);
   app.locals.db = client.db("red-social");
   console.log("MongoDB Atlas conectado");
 }
+
+
 
 app.use(cors());
 app.use(express.json());
