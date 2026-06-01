@@ -6,16 +6,14 @@ import { MongoClient } from "mongodb";
 import postsApi from "./api/posts.js";
 import seguidoresApi from "./api/seguidores.js";
 import mensajesApi from "./api/mensajes.js";
-
 import dns from "dns";
 
 dotenv.config();
 
 const app = express();
-// DNS de Google
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
-await connectDB();
+app.use(cors());
+app.use(express.json());
 
 async function connectDB() {
   console.log(process.env.db);
@@ -25,12 +23,10 @@ async function connectDB() {
   console.log("MongoDB Atlas conectado");
 }
 
+await connectDB();
 // get("/", async (req, res) => {
 //   res.send({ message: "API Conectada" });
 // });
-
-app.use(cors());
-app.use(express.json());
 
 // Rutas // apis
 app.use("/usuarios", usuariosApi);
