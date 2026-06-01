@@ -6,7 +6,6 @@ import { MongoClient } from "mongodb";
 import postsApi from "./api/posts.js";
 import seguidoresApi from "./api/seguidores.js";
 import mensajesApi from "./api/mensajes.js";
-import dns from "dns";
 
 dotenv.config();
 
@@ -16,7 +15,6 @@ app.use(cors());
 app.use(express.json());
 
 async function connectDB() {
-  console.log(process.env.db);
   const uri = process.env.MONGODB_URI;
   const client = await MongoClient.connect(uri);
   app.locals.db = client.db("red-social");
@@ -41,3 +39,6 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT || 3000);
 
 export default app;
+
+
+///MONGODB_URI = mongodb+srv://carlosraf_db_user:Carlos2026@cluster0.2pdgtpm.mongodb.net/?appName=Cluster0
