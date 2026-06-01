@@ -123,5 +123,16 @@ api.delete("/deleteuser/:userid", async (req, res) => {
   }
 });
 
+//SEARCH USER
+api.post("/buscar", async (req, res) => {
+  const clients = await req.app.locals.db
+    .collection("usuarios")
+    .find({nombre:{
+      $regex: req.body.name,
+      $options: "i"
+    }})
+    .toArray();
+  res.send({ data: users });
+});
 
 export default api;
