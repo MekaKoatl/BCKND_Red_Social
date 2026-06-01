@@ -24,13 +24,13 @@ api.post("/register", async (req, res) => {
         .status(400)
         .json({ message: "El nombre de usuario ya está registrado" });
 
-    if (password.length < 10) {
-      return res.redirect("la contraseña es demasiado corta");
+    if (password.length < 8) {
+      return res.status(400).json({message: "La contraseña debe tener al menos 8 caracteres"});
     }
 
     /////////////////////////////////////////////
 
-    const hash = await bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 8);
     const result = await db
       .collection("usuarios")
       .insertOne({ username, email, password: hash, createdAt: new Date() });
@@ -64,6 +64,19 @@ api.post("/login", async (req, res) => {
   }
 });
 
+//getprueba
+api.get("/seeusers", async (req, res) => {
+  try {
+    const getusers = await req.app.locals.db
+      .collection("usuarios")
+      .find()
+      .toArray();
+    res.json(getusers);
+  } catch (error) {
+    res.status(500).json({ message: "Error en el servidor", error });
+  }
+});
+
 // PUT /usuarios/edituser/:userid
 api.put("/edituser/:userid", async (req, res) => {
   try {
@@ -81,7 +94,7 @@ api.put("/edituser/:userid", async (req, res) => {
     const campos = {};
     if (username) campos.username = username;
     if (email) campos.email = email;
-    if (password) campos.password = await bcrypt.hash(password, 10); // cambia password
+    if (password) campos.password = await bcrypt.hash(password, 8); // cambia password
 
     await db
       .collection("usuarios")
