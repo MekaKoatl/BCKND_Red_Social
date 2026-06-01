@@ -43,7 +43,6 @@ json{ "body": "" }
 ///Borrar post
 DELETE http://localhost:3000/posts/deletepost/:postId
 
-
 SEGUIDORES
 ///Usuario 1 sigue a usuario 2
 - POST http://localhost:3000/seguidores/seguir
