@@ -46,6 +46,19 @@ api.get("/user/:userId", async (req, res) => {
   }
 });
 
+//getposts
+api.get("/posts", async (req, res) => {
+  try {
+    const getposts = await req.app.locals.db
+      .collection("posts")
+      .find()
+      .toArray();
+    res.json(getposts);
+  } catch (error) {
+    res.status(500).json({ message: "Error en el servidor", error });
+  }
+});
+
 // GET /posts/feed - posts de una lista de usuarios
 api.post("/feed", async (req, res) => {
   try {
