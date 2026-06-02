@@ -1,67 +1,220 @@
-﻿# BACK-END_Proyecto_RedSocialM2_LCSC
+# BACK-END Proyecto_RedSocialM2_LCSC
 
-Rutas funcionales
+## Rutas Funcionales
 
-Usuarios
-///Registrar Usuario
-- POST http://localhost:3000/usuarios/register
-json{ "username": "", "email": "", "password": "" }
+---
 
-///Log in Usuario
-- POST http://localhost:3000/usuarios/login
-json{ "email": "", "password": "" }
+# Usuarios
 
-////Editar datos usuario
-- PUT http://localhost:3000/usuarios/edituser/userid
-json{ "username": "", "email": "", "password": "" }
+## Registrar Usuario
 
-///Borar usuario
-- DELETE http://localhost:3000/usuarios/deleteuser/userid
+**POST**
 
-///Ver todos los usuarios
-- GET http://localhost:3000/usuarios/seeusers
+```http
+https://backendredsocial.vercel.app/usuarios/register
+```
 
-Posts
-////Crear post
-- POST http://localhost:3000/posts/addpost
-json{ "userId": "", "username": "", "body": "" }
+```json
+{
+  "username": "",
+  "email": "",
+  "password": ""
+}
+```
 
-////Ver todo los posts
-- GET http://localhost:3000/posts
+## Iniciar Sesión
 
-///Ver todo los posts de un usuario
-- GET http://localhost:3000/posts/user/userId
+**POST**
 
-///Ingresa los ids de seguidores y muestra todos los posts de esos ids (por orden de date)
-- POST http://localhost:3000/posts/feed
-json{ "userIds": ["", ""] }
+```http
+https://backendredsocial.vercel.app/usuarios/login
+```
 
-//Editar Post
-- PUT http://localhost:3000/posts/editpost/postId
-json{ "body": "" }
+```json
+{
+  "email": "",
+  "password": ""
+}
+```
 
-///Borrar post
-DELETE http://localhost:3000/posts/deletepost/:postId
+## Editar Usuario
 
-SEGUIDORES
-///Usuario 1 sigue a usuario 2
-- POST http://localhost:3000/seguidores/seguir
-json{ "userId": "", "followId": "" }
+**PUT**
 
-///Usuario 1 deja de seguir a usuario 2
-- POST http://localhost:3000/seguidores/dejar
-json{ "userId": "", "followId": "" }
+```http
+https://backendredsocial.vercel.app/usuarios/edituser/:userId
+```
 
-///Ve todos los seguidores de un usuario
-- GET http://localhost:3000/seguidores/userId
+```json
+{
+  "username": "",
+  "email": "",
+  "password": ""
+}
+```
 
-MENSAJES
-///Manda un mensaje de usuario 1 a usuario 2
-- POST http://localhost:3000/mensajes
-json{ "senderId": "", "receiverId": "", "text": "" }
+## Eliminar Usuario
 
-///Ve todos los mensajes de un usuario
-- GET http://localhost:3000/mensajes/userId
+**DELETE**
 
-/// Ve todos los mensajes entre usuario 1 y usuario 2
-- GET http://localhost:3000/mensajes/conversacion/userId1/userId2
+```http
+https://backendredsocial.vercel.app/usuarios/deleteuser/:userId
+```
+
+## Ver Todos los Usuarios
+
+**GET**
+
+```http
+https://backendredsocial.vercel.app/usuarios/seeusers
+```
+
+---
+
+# Posts
+
+## Crear Post
+
+**POST**
+
+```http
+https://backendredsocial.vercel.app/posts/addpost
+```
+
+```json
+{
+  "userId": "",
+  "username": "",
+  "body": ""
+}
+```
+
+## Ver Todos los Posts
+
+**GET**
+
+```http
+https://backendredsocial.vercel.app/posts
+```
+
+## Ver Todos los Posts de un Usuario
+
+**GET**
+
+```http
+https://backendredsocial.vercel.app/posts/user/:userId
+```
+
+## Obtener Feed de Usuarios Seguidos
+
+**POST**
+
+```http
+https://backendredsocial.vercel.app/posts/feed
+```
+
+```json
+{
+  "userIds": ["", ""]
+}
+```
+
+## Editar Post
+
+**PUT**
+
+```http
+https://backendredsocial.vercel.app/posts/editpost/:postId
+```
+
+```json
+{
+  "body": ""
+}
+```
+
+## Eliminar Post
+
+**DELETE**
+
+```http
+https://backendredsocial.vercel.app/posts/deletepost/:postId
+```
+
+---
+
+# Seguidores
+
+## Seguir Usuario
+
+**POST**
+
+```http
+https://backendredsocial.vercel.app/seguidores/seguir
+```
+
+```json
+{
+  "userId": "",
+  "followId": ""
+}
+```
+
+## Dejar de Seguir Usuario
+
+**POST**
+
+```http
+https://backendredsocial.vercel.app/seguidores/dejar
+```
+
+```json
+{
+  "userId": "",
+  "followId": ""
+}
+```
+
+## Ver Seguidores de un Usuario
+
+**GET**
+
+```http
+https://backendredsocial.vercel.app/seguidores/:userId
+```
+
+---
+
+# Mensajes
+
+## Enviar Mensaje
+
+**POST**
+
+```http
+https://backendredsocial.vercel.app/mensajes
+```
+
+```json
+{
+  "senderId": "",
+  "receiverId": "",
+  "text": ""
+}
+```
+
+## Ver Todos los Mensajes de un Usuario
+
+**GET**
+
+```http
+https://backendredsocial.vercel.app/mensajes/:userId
+```
+
+## Ver Conversación Entre Dos Usuarios
+
+**GET**
+
+```http
+https://backendredsocial.vercel.app/mensajes/conversacion/:userId1/:userId2
+```
