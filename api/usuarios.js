@@ -25,7 +25,9 @@ api.post("/register", async (req, res) => {
         .json({ message: "El nombre de usuario ya está registrado" });
 
     if (password.length < 8) {
-      return res.status(400).json({message: "La contraseña debe tener al menos 8 caracteres"});
+      return res
+        .status(400)
+        .json({ message: "La contraseña debe tener al menos 8 caracteres" });
     }
 
     /////////////////////////////////////////////
@@ -57,7 +59,11 @@ api.post("/login", async (req, res) => {
 
     res.json({
       message: "Login exitoso",
-      usuario: { id: usuario._id, username: usuario.username },
+      usuario: {
+        id: usuario._id,
+        username: usuario.username,
+        description: usuario.description || "",
+      },
     });
   } catch (error) {
     res.status(500).json({ message: "Error en el servidor", error });
@@ -81,7 +87,7 @@ api.get("/seeusers", async (req, res) => {
 api.put("/edituser/:userid", async (req, res) => {
   try {
     const userid = req.params.userid;
-    const { username, email, password } = req.body;
+    const { username, email, password, description } = req.body;
     const db = req.app.locals.db;
 
     // Verificar que el usuario existe
@@ -123,16 +129,6 @@ api.delete("/deleteuser/:userid", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error en el servidor", error });
   }
-});
-
-// POST /usuarios/login — cambia la respuesta
-res.json({
-  message: "Login exitoso",
-  usuario: { 
-    id: usuario._id, 
-    username: usuario.username,
-    description: usuario.description || ""
-  },
 });
 
 export default api;
