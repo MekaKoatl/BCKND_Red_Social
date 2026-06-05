@@ -94,7 +94,8 @@ api.put("/edituser/:userid", async (req, res) => {
     const campos = {};
     if (username) campos.username = username;
     if (email) campos.email = email;
-    if (password) campos.password = await bcrypt.hash(password, 8); // cambia password
+    if (password) campos.password = await bcrypt.hash(password, 8);
+    if (description !== undefined) campos.description = description;
 
     await db
       .collection("usuarios")
@@ -122,6 +123,16 @@ api.delete("/deleteuser/:userid", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: "Error en el servidor", error });
   }
+});
+
+// POST /usuarios/login — cambia la respuesta
+res.json({
+  message: "Login exitoso",
+  usuario: { 
+    id: usuario._id, 
+    username: usuario.username,
+    description: usuario.description || ""
+  },
 });
 
 export default api;
